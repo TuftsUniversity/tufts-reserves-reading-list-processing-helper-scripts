@@ -7,4 +7,4 @@ Note that in a v2 of this process, we intend to be able to take citations that d
 
 Note also that to ease the heavy lifting of adding citations to reading lists, Tufts also developed the Citation Loader cloud app to take a spreadsheet of MMS IDs and course codes (can also have barcodes for physical items, and you can specify a temporary reserves location to move these items to, as well as citation type and reading list section).  This is also now integral to our process and is referenced here in this diagram
 
-![workflow diagram](https://www.library.tufts.edu/reserves_workflows/Reserves Workflows at Tufts.svg)
+![workflow diagram]("https://www.library.tufts.edu/reserves_workflows/Reserves Workflows at Tufts.svg")
