@@ -84,7 +84,7 @@ def search(row, df, api_key_courses, output_df):
 
 
                         #new_row = new_row.loc[0,
-                        output_df = pd.concat([output_df, df[(df['MMS ID'] == mms_id) & df['Barcode'] == ].to_frame().T], ignore_index =True)
+                        output_df = pd.concat([output_df, df[(df['MMS ID'] == mms_id)].to_frame().T], ignore_index =True)
 
                         new_row.loc['reading_list_mms_id'] =  ""
                         new_row.loc['citation_id'] =  ""
