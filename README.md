@@ -28,4 +28,4 @@ Note also that to ease the heavy lifting of adding citations to reading lists, T
 
 
 
-![Workflow Diagram](https://www.library.tufts.edu/reserves_workflows/Reserves_Workflows_at_Tufts.svg")
+![Workflow Diagram]("https://www.library.tufts.edu/reserves_workflows/Reserves_Workflows_at_Tufts.svg")
