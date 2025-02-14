@@ -1,4 +1,5 @@
 Overlap Analysis Input Directory/*.xlsx
+Barnes and Noble/*xlsx
 config/secrets_local.py
 Barnes and Noble Parsed/*.xlsx
 config/__pycache__/secrets_local.cpython-38.pyc

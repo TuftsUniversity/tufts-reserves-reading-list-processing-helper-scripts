@@ -15,10 +15,10 @@ import sys
 # Tk().withdraw()
 
 
-bnf_files = glob.glob("Overlap Analysis Input Directory/*", recursive = True)
+bnf_files = glob.glob("Barnes and Noble/*", recursive = True)
 
 bAndN_filename = bnf_files[0]
-barnes_and_noble_df_input = pd.read_excel(bAndN_filename, dtype={"ISBN": "str", "ISBN(Matching Identifier)": "str", "ISBN(13)": "str", "MMS ID": "str"}, engine='openpyxl')
+barnes_and_noble_df_input = pd.read_excel(bAndN_filename, dtype=str, engine='openpyxl')
 courses_url = "https://api-na.hosted.exlibrisgroup.com/almaws/v1/courses?"
 
 api_key = secrets_local.prod_courses_api_key
@@ -53,8 +53,21 @@ for index, row in barnes_and_noble_df.iterrows():
         semester = semester.replace('W', 'Sp')
 
 
+        course = row['Course']
+        section = row['Sec']
+    # if re.fullmatch(r"^\d+$", course):
+    #     course = course.zfill(4)
+    #
+    # if re.fullmatch(r"^\d+$", section):
+    #     if bool(re.match(r"[A-Za-z]", course)):
+    #         section = section
+    #     else:
+    #         section = section.zfill(2)
+    #request_url = courses_url + "apikey=" + api_key + "&q=name~" + semester + "-" + row['Dept'] + "-" + course + "-" + section + "&format=json"
     request_url = courses_url + "apikey=" + api_key + "&q=name~" + semester + "*" + row['Dept'] + "*" + row['Course'] + "*" + row['Sec'] + "&format=json"
-    #print(request_url)
+
+
+
     response = requests.get(request_url).json()
 
 
@@ -63,26 +76,45 @@ for index, row in barnes_and_noble_df.iterrows():
     #print(str(index) + "\t-" + request_url)
 
 
+    if int(response['total_record_count']) > 1:
+        # print("multiple results")
 
+        x = 0
+        for course in response['course']:
+
+            course_name = course['name']
+
+            result = bool(re.match(rf"^{semester}-[0\s]*{row['Dept']}\s*-[0\s]*{row['Course']}\s*-[0\s]*{row['Sec']}.+", course_name))
+
+            if result:
+                correct_course = response['course'][x]
+
+            x += 1
+    else:
+        try:
+            correct_course = response['course'][0]
+
+        except:
+            print(json.dumps(response))
     try:
-        course_code = response['course'][0]['code']
+        course_code = correct_course['code']
     except:
         course_code = "Error finding course" + json.dumps(response)
 
     try:
-        section = response['course'][0]['section']
+        section = correct_course['section']
 
     except:
         section = "Error finding course" + json.dumps(response)
 
     try:
-        course_name = response['course'][0]['name']
+        course_name = correct_course['name']
 
     except:
         course_name = "Error finding course" + json.dumps(response)
 
     try:
-        course_processing_department = response['course'][0]['processing_department']['desc']
+        course_processing_department = correct_course['processing_department']['desc']
 
     except:
         course_processing_department = "Error finding processing department: " + json.dumps(response)

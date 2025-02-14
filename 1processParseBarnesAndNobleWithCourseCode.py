@@ -21,7 +21,7 @@ import socket
 barcode_array = []
 
 def read_excel_file(file_path):
-    df = pd.read_excel(file_path, skiprows=0, header=1, engine="openpyxl", dtype={'Course': 'str', 'Dept': 'str', 'Sec': 'str', 'EAN-13': 'str'})
+    df = pd.read_excel(file_path, skiprows=0, header=1, engine="openpyxl", dtype={'str'})
     df = df.fillna("")
 
 
